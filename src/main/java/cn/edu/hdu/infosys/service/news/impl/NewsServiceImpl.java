@@ -25,9 +25,11 @@ public class NewsServiceImpl implements INewsService
     @Override
     public News saveNews(News news)
     {
-        String tableName = this.getTableNameByTime(news.getPublishTime());
+        String contTableName = this.getContTableNameByTime(news.getPublishTime());
+        String sumTableName = this.getSumTableNameByTime(news.getPublishTime());
         //不存在，则创建表
-        newsDao.createNewTable(tableName);
+        newsDao.createNewTableCont(contTableName);
+        newsDao.createNewTableSum(sumTableName);
 
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("url", news.getUrl());
@@ -38,27 +40,35 @@ public class NewsServiceImpl implements INewsService
         param.put("srcName", news.getSrcName());
         param.put("publishTime", news.getPublishTime());
         param.put("crawlerSrc", news.getCrawlerSrc());
-        param.put("tableName", tableName);
-        
-        newsDao.saveNews(param);
+        param.put("tableName", contTableName);
+        newsDao.saveNewsCont(param);
+        param.put("tableName", sumTableName);
+        newsDao.saveNewsSum(param);
         return news;
     }
 
     @Override
     public List<News> findByNews(News news)
     {
-        newsDao.createNewTable(this.getTableNameByTime(news.getPublishTime()));
+        String contTableName = this.getContTableNameByTime(news.getPublishTime());
+        String sumTableName = this.getSumTableNameByTime(news.getPublishTime());
+        //不存在，则创建表
+        newsDao.createNewTableCont(contTableName);
+        newsDao.createNewTableSum(sumTableName);
         
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("url", news.getUrl());
-        
-        param.put("tableName", this.getTableNameByTime(news.getPublishTime()));
+        param.put("tableName", contTableName);
         return newsDao.findByNews(param);
     }
     
-    private String getTableNameByTime(String pubTime){
+    private String getContTableNameByTime(String pubTime){
         String time = pubTime.replace("-","_");
-        return "is_news_"+time.subSequence(0, 7);
+        return "is_news_cont_"+time.subSequence(0, 7);
+    }
+    
+    private String getSumTableNameByTime(String pubTime){
+        return "is_news_sum_"+pubTime.subSequence(0, 4);
     }
 
 }

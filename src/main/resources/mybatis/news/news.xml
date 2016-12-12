@@ -17,13 +17,26 @@
 
 
 
-	<insert id="saveNews" parameterType="java.util.Map" 
+	<insert id="saveNewsCont" parameterType="java.util.Map" 
 		useGeneratedKeys="true" flushCache="false">
 		insert into ${tableName} (
 		url,
 		title,
-		content_text,
 		content_html,
+		publish_time
+		) values (
+		#{url},
+		#{title},
+		#{contentHtml},
+		str_to_date(#{publishTime}, '%Y-%m-%d %H:%i:%s')
+		)
+	</insert>
+	
+		<insert id="saveNewsSum" parameterType="java.util.Map" 
+		useGeneratedKeys="true" flushCache="false">
+		insert into ${tableName} (
+		url,
+		title,
 		src_url,
 		src_name,
 		publish_time,
@@ -33,8 +46,6 @@
 		) values (
 		#{url},
 		#{title},
-		#{contentText},
-		#{contentHtml},
 		#{srcUrl},
 		#{srcName},
 		str_to_date(#{publishTime}, '%Y-%m-%d %H:%i:%s'),
@@ -49,25 +60,29 @@
 		SELECT
 		url,
 		title,
-		content_text as contentText,
-		content_html as
-		contentHtml,
-		src_url as srcUrl,
-		src_name as srcName,
-		DATE_FORMAT(publish_time, '%Y-%m-%d %H:%i:%s') as publishTime,
-		crawler_src as crawlerSrc
+		content_html as contentHtml,
+		DATE_FORMAT(publish_time, '%Y-%m-%d %H:%i:%s') as publishTime
 		FROM
 		${tableName}
 		WHERE
 		url=#{url}
 	</select>
 
-	<update id="createNewTable" parameterType="String">
+	<update id="createNewTableCont" parameterType="String">
 		CREATE TABLE if not EXISTS ${tableName} (
 		`url` varchar(250) NOT NULL COMMENT '新闻url连接',
 		`title` varchar(200) NOT NULL COMMENT '新闻标题',
-		`content_text` text COMMENT '新闻内容文本格式',
-		`content_html` text COMMENT '新闻内容html格式',
+		`content_html` longtext COMMENT '新闻内容html格式',
+		`publish_time` datetime DEFAULT NULL COMMENT '新闻发布时间',
+		PRIMARY KEY (`url`),
+		UNIQUE KEY `url_index` (`url`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	</update>
+	
+		<update id="createNewTableSum" parameterType="String">
+		CREATE TABLE if not EXISTS ${tableName} (
+		`url` varchar(250) NOT NULL COMMENT '新闻url连接',
+		`title` varchar(200) NOT NULL COMMENT '新闻标题',
 		`src_url` varchar(600) DEFAULT NULL COMMENT '新闻来源链接',
 		`src_name` varchar(200) DEFAULT NULL COMMENT '新闻来源',
 		`publish_time` datetime DEFAULT NULL COMMENT '新闻发布时间',
@@ -78,8 +93,6 @@
 		UNIQUE KEY `url_index` (`url`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	</update>
-	
-	
 	
 	
 

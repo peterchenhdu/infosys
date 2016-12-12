@@ -17,9 +17,12 @@ import cn.edu.hdu.infosys.model.News;
 
 public interface INewsDao
 {
-    public int saveNews(Map<String, Object> param);
+    public int saveNewsCont(Map<String, Object> param);
+    public int saveNewsSum(Map<String, Object> param);
     
     public List<News> findByNews(Map<String, Object> param);
     
-    public void createNewTable(@Param(value = "tableName") String tableName);
+    public void createNewTableCont(@Param(value = "tableName") String tableName);
+    
+    public void createNewTableSum(@Param(value = "tableName") String tableName);
 }
