@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import cn.edu.hdu.infosys.model.News;
-import cn.edu.hdu.infosys.model.User;
 
 /**
  * 
@@ -22,4 +21,5 @@ public interface INewsService
     
     public List<News> findByNews(News news);
 
+    public long getYearCount(int year);
 }

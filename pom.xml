@@ -169,6 +169,14 @@
 		</dependency>
 
 
+
+		    <dependency>
+		        <groupId>org.apdplat</groupId>
+		        <artifactId>word</artifactId>
+		        <version>1.2</version>
+		    </dependency>
+
+
 	</dependencies>
 	<build>
 		<finalName>infosys</finalName>

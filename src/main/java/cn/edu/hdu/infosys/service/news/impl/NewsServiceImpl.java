@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.edu.hdu.infosys.dao.INewsDao;
-import cn.edu.hdu.infosys.dao.IUserDao;
 import cn.edu.hdu.infosys.model.News;
-import cn.edu.hdu.infosys.model.User;
 import cn.edu.hdu.infosys.service.news.INewsService;
 
 
@@ -69,6 +67,14 @@ public class NewsServiceImpl implements INewsService
     
     private String getSumTableNameByTime(String pubTime){
         return "is_news_sum_"+pubTime.subSequence(0, 4);
+    }
+
+    @Override
+    public long getYearCount(int year)
+    {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("tableName", "is_news_sum_"+year);
+        return newsDao.getYearCount(param);
     }
 
 }

@@ -67,6 +67,15 @@
 		WHERE
 		url=#{url}
 	</select>
+	
+		<select id="getYearCount" parameterType="java.util.Map" 
+		resultType="long">
+		SELECT
+		count(*)
+		FROM
+		${tableName}
+	</select>
+	
 
 	<update id="createNewTableCont" parameterType="String">
 		CREATE TABLE if not EXISTS ${tableName} (

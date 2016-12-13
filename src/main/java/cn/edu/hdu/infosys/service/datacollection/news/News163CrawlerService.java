@@ -11,7 +11,6 @@ import cn.edu.hdu.infosys.model.News;
 import cn.edu.hdu.infosys.service.news.INewsService;
 import cn.edu.hdu.infosys.service.news.impl.NewsServiceImpl;
 import cn.edu.hdu.infosys.util.BeanUtil;
-import cn.edu.hdu.infosys.util.StringUtils;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.crawler.Page;

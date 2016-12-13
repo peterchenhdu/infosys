@@ -25,4 +25,7 @@ public interface INewsDao
     public void createNewTableCont(@Param(value = "tableName") String tableName);
     
     public void createNewTableSum(@Param(value = "tableName") String tableName);
+    
+    
+    public long getYearCount(Map<String, Object> param);
 }
