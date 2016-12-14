@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 import cn.edu.hdu.infosys.model.News;
 
-
 /**
  * @author Pi Chen
  * @version infosys V1.0.0, 2016年12月10日
@@ -18,6 +17,7 @@ import cn.edu.hdu.infosys.model.News;
 public interface INewsDao
 {
     public int saveNewsCont(Map<String, Object> param);
+
     public int saveNewsSum(Map<String, Object> param);
 
     public List<News> findByNews(Map<String, Object> param);
@@ -26,6 +26,9 @@ public interface INewsDao
 
     public void createNewTableSum(@Param(value = "tableName") String tableName);
 
+    public List<News> findByTime(@Param(value = "tableName") String tableName,
+        @Param(value = "from") String from, @Param(value = "to") String to,
+        @Param(value = "offset") long offset, @Param(value = "limit") long limit);
 
     public long getYearCount(Map<String, Object> param);
 }

@@ -1,3 +1,4 @@
+
 package cn.edu.hdu.infosys.controller.news;
 
 import java.util.HashMap;
@@ -45,9 +46,18 @@ public class newsStatController
         for(int i = from; i<=to; i++){
             data.put(i+"", newsService.getYearCount(i));
         }
-
-
         return new ResponseEntity<Map<String, Object>>(data, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/monthdata", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public ResponseEntity<Map<String, Object>> getByMonth(
+        @RequestParam(value = "month", defaultValue = "2000-01") String month,
+        @RequestParam(value = "offset", defaultValue = "0") long offset,
+        @RequestParam(value = "limit", defaultValue = "10") long limit)
+    {
+        Map<String, Object> data = new HashMap<String, Object>();
+
+        data.put("rstData", newsService.findByMonth(month,  offset,  limit)) ;
+        return new ResponseEntity<Map<String, Object>>(data, HttpStatus.OK);
+    }
 }

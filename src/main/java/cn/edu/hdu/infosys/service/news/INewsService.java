@@ -19,6 +19,8 @@ public interface INewsService
     public News saveNews(News news);
 
     public List<News> findByNews(News news);
+    
+    public List<News> findByMonth(String month, long offset, long limit);
 
     public long getYearCount(int year);
 }

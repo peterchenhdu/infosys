@@ -12,6 +12,7 @@ import cn.edu.hdu.infosys.common.base.BaseService;
 import cn.edu.hdu.infosys.dao.INewsDao;
 import cn.edu.hdu.infosys.model.News;
 import cn.edu.hdu.infosys.service.news.INewsService;
+import cn.edu.hdu.infosys.util.TimeUtil;
 
 
 
@@ -84,6 +85,17 @@ public class NewsServiceImpl extends BaseService implements INewsService
         }
 
         return count;
+    }
+
+    @Override
+    public List<News> findByMonth(String month, long offset, long limit)
+    {
+        String tableName = this.getSumTableNameByTime(month);
+        String from = month + "-01 00:00:00";
+        String to = TimeUtil.getDate(from, 0, 1, 0, 0);
+        
+        
+        return newsDao.findByTime(tableName, from, to, offset, limit);
     }
 
 }

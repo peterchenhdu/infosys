@@ -103,6 +103,21 @@
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	</update>
 	
-	
+		<select id="findByTime" resultType="cn.edu.hdu.infosys.model.News">
+		SELECT
+			url,
+			title,
+			src_url as srcUrl,
+			src_name as srcName,
+			crawler_src as crawlerSrc,
+			DATE_FORMAT(publish_time, '%Y-%m-%d %H:%i:%s') as publishTime
+			FROM
+			${tableName}
+		WHERE
+			publish_time<![CDATA[ >=]]>str_to_date(#{from}, '%Y-%m-%d %H:%i:%s')
+			AND
+			publish_time<![CDATA[ <=]]>str_to_date(#{to}, '%Y-%m-%d %H:%i:%s')
+			limit #{offset}, #{limit}
+	</select>
 
 </mapper>

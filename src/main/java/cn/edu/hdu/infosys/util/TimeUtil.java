@@ -13,25 +13,42 @@
  */
 package cn.edu.hdu.infosys.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import cn.edu.hdu.infosys.common.log.Logger;
+
 /**
  * 时间工具类
- *
+ * 
+ * 
  * @author Pi Chen
- * @version infosys V1.0.0, 2016年11月02日
+ * @version infosys V1.0.0, 2016年12月14日
  * @see
  * @since infosys V1.0.0
  */
 
 public class TimeUtil
 {
-
+    public static Logger logger = Logger.getLogger(TimeUtil.class);
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String YEARTIME_POSTFIX = "-01-01 00:00:00";
+    public static final String MONTHTIME_POSTFIX = "-01 00:00:00";
 
+    
+    
+    /**
+     * 获取年初时间
+     *
+     * @return
+     */
+    public static String getCurYearStartTime()
+    {
+        return new GregorianCalendar().get(Calendar.YEAR) + YEARTIME_POSTFIX;
+    }
 
     /**
      * 获取当前时间
@@ -45,13 +62,23 @@ public class TimeUtil
     }
 
     /**
-     * 获取年初时间
+     * 获取去年年初时间
      *
      * @return
      */
-    public static String getYearStartTime()
+    public static String getLastYearStartTime()
     {
-        return new GregorianCalendar().get(Calendar.YEAR) + "-01-01 00:00:00";
+        return (new GregorianCalendar().get(Calendar.YEAR) - 1) + YEARTIME_POSTFIX;
+    }
+
+    /**
+     * 获取去年当前时间
+     *
+     * @return
+     */
+    public static String getLastYearCurTime()
+    {
+        return getDate(new Date(), -1, 0, 0, 0);
     }
 
     /**
@@ -78,4 +105,20 @@ public class TimeUtil
         return formatter.format(date);
     }
 
+    
+    public static String getDate(String date, int y, int m, int d, int h ) {
+
+        SimpleDateFormat sdf =   new SimpleDateFormat( DATE_TIME_FORMAT);
+         String time="2000-01-01 00:00:00";
+        try
+        {
+            time = TimeUtil.getDate(sdf.parse(date), y, m, d, h);
+        }
+        catch (ParseException e)
+        {
+            logger.error(e.toString(), e);
+
+        }
+         return time;
+    }
 }
