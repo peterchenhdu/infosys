@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Service;
 
+import cn.edu.hdu.infosys.common.base.BaseService;
 import cn.edu.hdu.infosys.dao.INewsDao;
 import cn.edu.hdu.infosys.model.News;
 import cn.edu.hdu.infosys.service.news.INewsService;
@@ -14,12 +16,12 @@ import cn.edu.hdu.infosys.service.news.INewsService;
 
 
 @Service("newsService")
-public class NewsServiceImpl implements INewsService
+public class NewsServiceImpl extends BaseService implements INewsService
 {
 
     @Autowired
     private INewsDao newsDao;
-    
+
     @Override
     public News saveNews(News news)
     {
@@ -53,18 +55,18 @@ public class NewsServiceImpl implements INewsService
         //不存在，则创建表
         newsDao.createNewTableCont(contTableName);
         newsDao.createNewTableSum(sumTableName);
-        
+
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("url", news.getUrl());
         param.put("tableName", contTableName);
         return newsDao.findByNews(param);
     }
-    
+
     private String getContTableNameByTime(String pubTime){
         String time = pubTime.replace("-","_");
         return "is_news_cont_"+time.subSequence(0, 7);
     }
-    
+
     private String getSumTableNameByTime(String pubTime){
         return "is_news_sum_"+pubTime.subSequence(0, 4);
     }
@@ -74,7 +76,14 @@ public class NewsServiceImpl implements INewsService
     {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("tableName", "is_news_sum_"+year);
-        return newsDao.getYearCount(param);
+        long count = 0;
+        try{
+            count  = newsDao.getYearCount(param);
+        }catch(BadSqlGrammarException e){
+            logger.warn("Bad Sql Grammar Exception, this often happened when table is_news_sum_{} does not exist.", year);
+        }
+
+        return count;
     }
 
 }

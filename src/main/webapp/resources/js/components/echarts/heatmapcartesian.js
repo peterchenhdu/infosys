@@ -6,11 +6,7 @@ export default class HeatmapCartesian extends React.Component{
   constructor(props){
     super(props);
   }
-  autoResize() {
-    var chartdiv = document.getElementById('heatmap-chart');
-    chartdiv.style.width = (5*window.innerWidth/6 - 240)+'px';
-    chartdiv.style.height = (window.innerHeight - 90)+'px';
-  }
+
   componentDidMount() {
     this.autoResize();
     // 基于准备好的dom，初始化echarts实例
@@ -80,15 +76,12 @@ export default class HeatmapCartesian extends React.Component{
             }
         }]
     });
-    window.onresize = function () {
-        this.autoResize();
-        myChart.resize();
-    }.bind(this);
+
   }
 
   render() {
     return (
-			<div id = "heatmap-chart">
+			<div id = "heatmap-chart" >
 			</div>
     );
   }

@@ -1,3 +1,4 @@
+import './style/charts.css'
 import React from 'react'
 import echarts from 'echarts'
 import $ from 'jquery';          //jquery
@@ -28,32 +29,21 @@ export default class AreaStack extends React.Component{
     });
 
   }
-  autoResize() {
-    var areastack = document.getElementById('areastack-chart');
-    areastack.style.width = (5*window.innerWidth/6 - 240)+'px';
-    areastack.style.height = (window.innerHeight - 90)+'px';
-  }
+
 
 
   componentDidMount() {
-    this.autoResize();
+
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('areastack-chart'));
     // 绘制图表
     myChart.setOption({
         title: {
+            left: 'center',
             text: '历年新闻记录数'
         },
         tooltip : {
             trigger: 'axis'
-        },
-        legend: {
-            data:['记录数']
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
         },
         grid: {
             left: '3%',
@@ -80,6 +70,7 @@ export default class AreaStack extends React.Component{
                 name:'记录数',
                 type:'line',
                 stack: '记录数',
+                smooth:true,
                 label: {
                     normal: {
                         show: true,
@@ -102,10 +93,7 @@ export default class AreaStack extends React.Component{
 
         ]
     });
-    window.onresize = function () {
-        this.autoResize();
-        myChart.resize();
-    }.bind(this);
+
   }
 
   render() {

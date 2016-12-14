@@ -19,13 +19,13 @@ public interface INewsDao
 {
     public int saveNewsCont(Map<String, Object> param);
     public int saveNewsSum(Map<String, Object> param);
-    
+
     public List<News> findByNews(Map<String, Object> param);
-    
+
     public void createNewTableCont(@Param(value = "tableName") String tableName);
-    
+
     public void createNewTableSum(@Param(value = "tableName") String tableName);
-    
-    
+
+
     public long getYearCount(Map<String, Object> param);
 }
