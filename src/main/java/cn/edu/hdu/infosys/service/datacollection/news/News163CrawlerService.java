@@ -46,12 +46,12 @@ public class News163CrawlerService extends WebCrawler
     private int maxPagesNum = -1;
     //种子数组
     private String[] seedArr = new String[]{
-//        "http://news.163.com/08/0221/00/456GBQO50001124J.html"
-        "http://news.163.com/",
-        "http://news.163.com/rank/",
-        "http://news.163.com/domestic/",
-        "http://news.163.com/world/",
-        "http://news.163.com/special/"
+        "http://news.163.com/13/0208/09/8N6CR08N00014AED.html"
+//        "http://news.163.com/",
+//        "http://news.163.com/rank/",
+//        "http://news.163.com/domestic/",
+//        "http://news.163.com/world/",
+//        "http://news.163.com/special/"
     };
 
     private INewsService newsService = BeanUtil.getBean("newsService", NewsServiceImpl.class); ;

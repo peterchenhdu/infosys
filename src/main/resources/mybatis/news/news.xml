@@ -68,12 +68,14 @@
 		url=#{url}
 	</select>
 	
-		<select id="getYearCount" parameterType="java.util.Map" 
+		<select id="getCount" parameterType="java.util.Map" 
 		resultType="long">
 		SELECT
-		count(*)
+		  count(*)
 		FROM
-		${tableName}
+		  ${tableName}
+	    WHERE 1=1
+
 	</select>
 	
 
@@ -117,7 +119,11 @@
 			publish_time<![CDATA[ >=]]>str_to_date(#{from}, '%Y-%m-%d %H:%i:%s')
 			AND
 			publish_time<![CDATA[ <=]]>str_to_date(#{to}, '%Y-%m-%d %H:%i:%s')
-			limit #{offset}, #{limit}
+			order by publish_time desc
+            <if test="offset != null and limit!=null">
+                limit #{offset}, #{limit}
+            </if>
+			
 	</select>
 
 </mapper>

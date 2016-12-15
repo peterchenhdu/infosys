@@ -3,7 +3,7 @@ import React from 'react'
 import echarts from 'echarts'
 import $ from 'jquery';          //jquery
 
-export default class AreaStack extends React.Component{
+export default class YearDataChart extends React.Component{
 
   constructor(props){
     super(props);

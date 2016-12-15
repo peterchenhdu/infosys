@@ -30,5 +30,6 @@ public interface INewsDao
         @Param(value = "from") String from, @Param(value = "to") String to,
         @Param(value = "offset") long offset, @Param(value = "limit") long limit);
 
-    public long getYearCount(Map<String, Object> param);
+    public long getCount(Map<String, Object> param);
+
 }

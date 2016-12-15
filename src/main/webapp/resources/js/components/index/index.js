@@ -1,7 +1,8 @@
 import './style/index.css'
 import React from 'react'
 import { Row, Col } from 'antd';
-import AreaStack from '../echarts/areastack'
+import YearDataChart from '../echarts/YearDataChart'
+import MonthSearch from '../search/MonthSearch'
 import $ from 'jquery';          //jquery
 import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
@@ -21,15 +22,15 @@ export default class Index extends React.Component{
       success : function(data) {
 
           this.state.totalCount=data.totalCount;
-		
+
       }.bind(this),
 	  error: function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status + ' ' + jqXHR.responseText);
 	  }
     });
-	
-	
-    
+
+
+
   }
 
   handleMenuClick(e) {
@@ -42,10 +43,13 @@ export default class Index extends React.Component{
   render() {
 
 
-    var body = <AreaStack />;
+    var body = <YearDataChart />;
     switch (this.state.currentMenu) {
       case "chart":
-        body = <AreaStack />;
+        body = <YearDataChart />;
+        break;
+      case "search":
+        body = <MonthSearch />;
         break;
       default:
         body = <h1>待开发</h1>;

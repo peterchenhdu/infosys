@@ -1,12 +1,12 @@
 package cn.edu.hdu.infosys.model;
 
 /**
- * 
- * 
- * 
+ *
+ *
+ *
  * @author    Pi Chen
  * @version   infosys V1.0.0, 2016年12月10日
- * @see       
+ * @see
  * @since     infosys V1.0.0
  */
 public class News
@@ -18,6 +18,7 @@ public class News
     private String srcUrl;
     private String srcName;
     private String publishTime;
+    private String crawlerName;
     private String crawlerSrc;
     public String getUrl()
     {
@@ -82,6 +83,20 @@ public class News
     public void setCrawlerSrc(String crawlerSrc)
     {
         this.crawlerSrc = crawlerSrc;
+    }
+    /**
+     * @return the crawlerName
+     */
+    public String getCrawlerName()
+    {
+        return crawlerName;
+    }
+    /**
+     * @param crawlerName the crawlerName to set
+     */
+    public void setCrawlerName(String crawlerName)
+    {
+        this.crawlerName = crawlerName;
     }
 
 }

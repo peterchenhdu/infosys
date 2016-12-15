@@ -1,5 +1,6 @@
 package cn.edu.hdu.infosys.service.news.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,9 +80,10 @@ public class NewsServiceImpl extends BaseService implements INewsService
         param.put("tableName", "is_news_sum_"+year);
         long count = 0;
         try{
-            count  = newsDao.getYearCount(param);
+            count  = newsDao.getCount(param);
         }catch(BadSqlGrammarException e){
             logger.warn("Bad Sql Grammar Exception, this often happened when table is_news_sum_{} does not exist.", year);
+            logger.error(e.toString(),e);
         }
 
         return count;
@@ -93,9 +95,44 @@ public class NewsServiceImpl extends BaseService implements INewsService
         String tableName = this.getSumTableNameByTime(month);
         String from = month + "-01 00:00:00";
         String to = TimeUtil.getDate(from, 0, 1, 0, 0);
-        
-        
-        return newsDao.findByTime(tableName, from, to, offset, limit);
+        List<News> rst = new ArrayList<News>();
+
+        try{
+            rst = newsDao.findByTime(tableName, from, to, offset, limit);
+        }catch(BadSqlGrammarException e){
+            logger.warn("Bad Sql Grammar Exception, this often happened when table is_news_sum_{} does not exist.", month.subSequence(0, 4));
+            logger.error(e.toString(),e);
+        }
+
+        for(News news : rst){
+            switch (news.getCrawlerSrc())
+            {
+            case "news.163.com":
+                news.setCrawlerName("网易新闻");
+                break;
+
+            default:
+                break;
+            }
+        }
+        return rst;
+    }
+
+
+    @Override
+    public long getCount(String month)
+    {
+        String tableName = this.getContTableNameByTime(month);
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("tableName", tableName);
+        long count = 0;
+        try{
+            count = newsDao.getCount(param);
+        }catch(BadSqlGrammarException e){
+            logger.warn("Bad Sql Grammar Exception, this often happened when table is_news_cont_{} does not exist.", month.subSequence(0, 7));
+            logger.error(e.toString(),e);
+        }
+        return count;
     }
 
 }

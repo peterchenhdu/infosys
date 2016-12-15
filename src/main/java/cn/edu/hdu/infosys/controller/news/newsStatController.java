@@ -57,7 +57,8 @@ public class newsStatController
     {
         Map<String, Object> data = new HashMap<String, Object>();
 
-        data.put("rstData", newsService.findByMonth(month,  offset,  limit)) ;
+        data.put("rstData", newsService.findByMonth(month,  offset,  limit));
+        data.put("totalNum", newsService.getCount(month));
         return new ResponseEntity<Map<String, Object>>(data, HttpStatus.OK);
     }
 }
